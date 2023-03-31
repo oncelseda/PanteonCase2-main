@@ -7,23 +7,15 @@ public class Tile : MonoBehaviour
 {
     [SerializeField] private Color _baseColor, _darkColor;
     
-    private int x;
-    private int y;
+    public int x;
+    public int y;
 
     public int gCost;
     public int hCost;
     public int fCost;
+    public bool isWalkable = true;
 
     public Tile cameFromTile;
-
-
-
-    public override string ToString()
-    {
-        return x + "," + y;
-    }
-
-
 
 
     public void Init(bool isChangeTileColor)
@@ -32,7 +24,10 @@ public class Tile : MonoBehaviour
     }
 
 
-
+    public void CalculateFCost()
+    {
+        fCost = gCost + hCost;
+    }
 
 
 
