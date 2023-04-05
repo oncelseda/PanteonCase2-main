@@ -23,7 +23,7 @@ public class SoldierMoving : MonoBehaviour
             if (selected != null)
             {
                 Color selectColor = selected.GetComponent<SpriteRenderer>().color;
-                selectColor.a = 1f;
+                selectColor.r =1f; selectColor.g = 1f; selectColor.b = 1f;
                 selected.GetComponent<SpriteRenderer>().color = selectColor;
 
             }
@@ -32,7 +32,7 @@ public class SoldierMoving : MonoBehaviour
                 {
                     selected = soldier.gameObject;
                     Color selectColor = soldier.gameObject.GetComponent<SpriteRenderer>().color;
-                    selectColor.a = 0.70f;
+                    selectColor.r = 0.50f; selectColor.g = 0.50f; selectColor.b = 0.50f;
                     soldier.gameObject.GetComponent<SpriteRenderer>().color = selectColor;
 
 

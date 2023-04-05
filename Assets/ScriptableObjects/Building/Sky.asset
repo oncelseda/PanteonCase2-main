@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea033cdbe90c176449a8ef0f518b7cc1, type: 3}
+  m_Name: Sky
+  m_EditorClassIdentifier: 
+  buildSprite: {fileID: 21300000, guid: 22af81fbfc7cf3e49971896988c07c40, type: 3}
+  buildSize: 6x4
+  buildMaxHealth: 50
+  build: {fileID: 1708411428713932996, guid: d4933b997fa51c948accfe769f56d4fd, type: 3}
+  producibles: []

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa84e281b436adc448670c96c74e4a45, type: 3}
   m_Name: Soldier3
   m_EditorClassIdentifier: 
-  soldierMaxHealth: 100
+  soldierMaxHealth: 10
   damage: 10
   speed: 5
   attackCooldown: 3

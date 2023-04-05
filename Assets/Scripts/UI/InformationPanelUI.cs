@@ -11,6 +11,7 @@ public class InformationPanelUI : MonoBehaviour
     private List<GameObject> producibles = new List<GameObject>();
     public TextMeshProUGUI buildSizeText;
     public TextMeshProUGUI buildNameText;
+    public TextMeshProUGUI buildHealthText;
     public GameObject produciblesParent;
     public static InformationPanelUI instance;
     public Image buildImage;
@@ -50,6 +51,7 @@ public class InformationPanelUI : MonoBehaviour
            
         }
         buildSizeText.text = ("Build Size : " + buildingInfo.BuildSize);
+        buildHealthText.text =("Build Max Health : " + buildingInfo.BuildMaxHealth);
         buildNameText.text = buildingInfo.name;
         buildImage.sprite = buildingSO.BuildSprite;
 
