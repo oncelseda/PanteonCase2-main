@@ -9,6 +9,8 @@ public class MoveObject : MonoBehaviour
     private SpriteRenderer moveSprite;
     private Camera cam;
     private int collidingCount = 0;
+    public bool destroyRB;
+
 
     private void Update()
     {
@@ -22,11 +24,12 @@ public class MoveObject : MonoBehaviour
             }
         }
     }
-    public void Initialize(SpriteRenderer sr)
+    public void Initialize(SpriteRenderer sr,bool destroyRB=false)
     {
 
         moveSprite = sr;
         cam = Camera.main;
+        this.destroyRB = destroyRB;
     }
     public void Move(Vector3 position)
     {
@@ -37,8 +40,17 @@ public class MoveObject : MonoBehaviour
     public void Place()
     {
 
+        Bounds buildBound = GetComponent<Collider2D>().bounds;
+        buildBound.extents -= Vector3.one *0.5f;
+        BuildingFactory.instance.gameBoard.SetWalkable(buildBound,false);
+      
 
         Destroy(this);
+        if (destroyRB == true) {
+
+            Destroy(GetComponent<Rigidbody2D>());
+        }
+        
 
 
     }

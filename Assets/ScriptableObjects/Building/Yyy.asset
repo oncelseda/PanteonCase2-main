@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea033cdbe90c176449a8ef0f518b7cc1, type: 3}
-  m_Name: PowerPlant
+  m_Name: Yyy
   m_EditorClassIdentifier: 
-  buildSprite: {fileID: 21300000, guid: ed98b86615509484a827ab6d660e0bbe, type: 3}
-  buildSize: 3x2
+  buildSprite: {fileID: 21300000, guid: 077ae6b05d51331429cb00a79cea6c9a, type: 3}
+  buildSize: 3x3
   buildMaxHealth: 50
-  build: {fileID: 600716251313455951, guid: a84379ee622073d4eb521fefc47b87be, type: 3}
+  build: {fileID: 4892054326352794564, guid: dc2ee57cd25e9054eb86661120ee2ab2, type: 3}
   producibles: []

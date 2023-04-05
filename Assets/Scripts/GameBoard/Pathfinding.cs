@@ -116,17 +116,17 @@ public class Pathfinding : MonoBehaviour
         {
             neighbourList.Add(GetTile(currentTile.x - 1, currentTile.y));
             if (currentTile.y - 1 >= 0) { neighbourList.Add(GetTile(currentTile.x - 1, currentTile.y - 1)); }
-            if (currentTile.y + 1 >= gameBoard.height) { neighbourList.Add(GetTile(currentTile.x - 1, currentTile.y + 1)); }
+            if (currentTile.y + 1 < gameBoard.height) { neighbourList.Add(GetTile(currentTile.x - 1, currentTile.y + 1)); }
         }
         if (currentTile.x + 1 < gameBoard.width)
         {
             neighbourList.Add(GetTile(currentTile.x + 1, currentTile.y));
             if (currentTile.y - 1 >= 0) { neighbourList.Add(GetTile(currentTile.x + 1, currentTile.y - 1)); }
-            if (currentTile.y + 1 >= gameBoard.height) { neighbourList.Add(GetTile(currentTile.x + 1, currentTile.y + 1)); }
+            if (currentTile.y + 1 < gameBoard.height) { neighbourList.Add(GetTile(currentTile.x + 1, currentTile.y + 1)); }
 
         }
         if (currentTile.y - 1 >= 0) { neighbourList.Add(GetTile(currentTile.x, currentTile.y - 1)); }
-        if (currentTile.y + 1 >= 0) { neighbourList.Add(GetTile(currentTile.x, currentTile.y + 1)); }
+        if (currentTile.y + 1 < gameBoard.height) { neighbourList.Add(GetTile(currentTile.x, currentTile.y + 1)); }
 
         return neighbourList;
 

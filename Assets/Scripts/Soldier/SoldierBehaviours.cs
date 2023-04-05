@@ -2,23 +2,60 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoldierBehaviours : MonoBehaviour, IMove
+public class SoldierBehaviours : Damageable, IMove, IAttack, ICounterAttack
 {
 
 
     private int currentTileIndex;
     private List<Vector3> pathVectorList;
-    private float speed=3f;
+    private Damageable enemy;
+    private UnitBehaviour currentState;
+    private UnitBehaviour nextState;
+    private IEnumerator attackRoutine;
+    [SerializeField] private SoldierSO soldier;
+
+
+    public enum UnitBehaviour
+    {
+
+        Idle,
+        Attack,
+        Move
+
+    }
+
+    private void Start()
+    {
+        currentHealth = soldier.SoldierMaxHealth;
+        healthbar.SetHealth(currentHealth, soldier.SoldierMaxHealth);
+
+    }
 
     private void Update()
     {
         HandleMovement();
     }
 
-
-    public void Move(Vector2 endPoint)
+    private IEnumerator AttackCoroutine()
     {
+        WaitForSeconds attackCooldown = new WaitForSeconds(soldier.AttackCooldown);
+        while (enemy.currentHealth != 0)
+        {
 
+            Attack();
+            yield return attackCooldown;
+        }
+    }
+
+    private void Attack()
+    {
+        enemy.TakeDamage(soldier.Damage, this);
+
+    }
+
+    public void Move(Vector2 endPoint, UnitBehaviour next)
+    {
+        StopAttack();
         currentTileIndex = 0;
         pathVectorList = Pathfinding.instance.FindPath(transform.position, endPoint);
         if (pathVectorList != null && pathVectorList.Count > 1)
@@ -27,6 +64,7 @@ public class SoldierBehaviours : MonoBehaviour, IMove
             pathVectorList.RemoveAt(0);
         }
 
+        nextState = next;
 
     }
 
@@ -39,9 +77,9 @@ public class SoldierBehaviours : MonoBehaviour, IMove
             {
                 Vector3 moveDir = (targetPosition - transform.position).normalized;
 
-               
-                Debug.DrawLine(transform.position,pathVectorList[pathVectorList.Count-1],Color.blue);
-                transform.position = Vector3.MoveTowards(transform.position,targetPosition,speed*Time.deltaTime);
+
+                Debug.DrawLine(transform.position, pathVectorList[pathVectorList.Count - 1], Color.blue);
+                transform.position = Vector3.MoveTowards(transform.position, targetPosition, soldier.Speed * Time.deltaTime);
             }
             else
             {
@@ -49,16 +87,57 @@ public class SoldierBehaviours : MonoBehaviour, IMove
                 if (currentTileIndex >= pathVectorList.Count)
                 {
                     StopMoving();
-                    
+
                 }
             }
-           
+
         }
     }
     private void StopMoving()
     {
-        transform.position = pathVectorList[pathVectorList.Count-1];
+        transform.position = pathVectorList[pathVectorList.Count - 1];
         pathVectorList = null;
+        currentState = nextState;
+
+        if (currentState == UnitBehaviour.Attack && enemy != null && enemy.IsInNeighbour(transform.position))
+        {
+            StartAttack();
+        }
     }
 
+    private void StartAttack()
+    {
+        StopAttack();
+        attackRoutine = AttackCoroutine();
+        StartCoroutine(attackRoutine);
+
+    }
+    private void StopAttack()
+    {
+
+        if (attackRoutine != null)
+        {
+
+            StopCoroutine(attackRoutine);
+
+        }
+
+    }
+
+    public void SetEnemy(Damageable enemy)
+    {
+        if (this.enemy == enemy)
+            return;
+        this.enemy = enemy;
+
+    }
+
+    public void onAttacked(Damageable enemy)
+    {
+        if (this.enemy == enemy) { return; }
+        SetEnemy(enemy);
+        StartAttack();
+        currentState = UnitBehaviour.Attack;
+
+    }
 }

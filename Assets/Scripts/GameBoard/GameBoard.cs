@@ -27,7 +27,18 @@ public class GameBoard: MonoBehaviour
         GeneratorGameBoard();
     }
 
-
+    public void SetWalkable(Bounds bounds, bool isWalkable)
+    {
+        for (float x =bounds.min.x; x < Mathf.Ceil(bounds.max.x); x++)
+        {
+            for (float y = bounds.min.y; y < Mathf.Ceil(bounds.max.y); y++)
+            {
+                int tileX, tileY;
+                GetXY(new Vector3(x,y),out tileX,out tileY );
+                grid[tileX,tileY].isWalkable=isWalkable;
+            }
+        }
+    }
     public void GetXY(Vector3 worldPosition, out int x, out int y)
     {
         Vector3 middlePoint = new Vector3(width / 2, height / 2) * tileSize - new Vector3(tileSize / 2, tileSize / 2);

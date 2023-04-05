@@ -6,6 +6,7 @@ public class BuildingFactory : MonoBehaviour
 {
    
     public static BuildingFactory instance;
+    public GameBoard gameBoard;
     private void Awake()
     {
         if (instance == null)
@@ -25,7 +26,7 @@ public class BuildingFactory : MonoBehaviour
 
         b = Instantiate(bSO.Build).GetComponent<Building>();
         b.Initialize(bSO);
-        b.gameObject.AddComponent<MoveObject>().Initialize(b.GetComponent<SpriteRenderer>());
+        b.gameObject.AddComponent<MoveObject>().Initialize(b.GetComponent<SpriteRenderer>(),true);
 
 
         return b;

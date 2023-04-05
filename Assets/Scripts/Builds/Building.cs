@@ -5,18 +5,21 @@ using UnityEngine.UI;
 
 
 
-public abstract class Building:MonoBehaviour
+public abstract class Building : Damageable
 {
     protected BuildingSO buildingInfo;
-    protected int currentBuildHealth;
     
-    
+
+
     
     
     public virtual void Initialize(BuildingSO buildingSO)
     {
         buildingInfo = buildingSO;
-        currentBuildHealth = buildingSO.BuildMaxHealth;
+        currentHealth = buildingSO.BuildMaxHealth;
+        healthbar.SetHealth(currentHealth, buildingSO.BuildMaxHealth);
+
+
     }
 
 
@@ -25,7 +28,7 @@ public abstract class Building:MonoBehaviour
         InformationPanelUI.instance.SetBuildInfo(buildingInfo,this);
     }
 
-    
+
 
 }
 

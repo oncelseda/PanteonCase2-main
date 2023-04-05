@@ -5,7 +5,7 @@ using UnityEngine;
 public class SoldierMoving : MonoBehaviour
 {
     private Camera cam;
-    private IMove move;
+    private GameObject selected;
   
     private void Start()
     {
@@ -20,24 +20,54 @@ public class SoldierMoving : MonoBehaviour
             Vector3 mousePosition = cam.ScreenToWorldPoint(Input.mousePosition + Vector3.forward * 10);
             mousePosition = new Vector3(Mathf.Ceil(mousePosition.x), Mathf.Ceil(mousePosition.y), Mathf.Ceil(mousePosition.z));
 
-            Collider2D soldier = Physics2D.OverlapCircle(mousePosition, 0.5f,LayerMask.GetMask("Soldier"));
-            if (soldier != null && soldier.TryGetComponent(out IMove m))
+            if (selected != null)
             {
-                move = m;
-                
+                Color selectColor = selected.GetComponent<SpriteRenderer>().color;
+                selectColor.a = 1f;
+                selected.GetComponent<SpriteRenderer>().color = selectColor;
+
             }
+                Collider2D soldier = Physics2D.OverlapCircle(mousePosition, 0.5f, LayerMask.GetMask("Soldier"));
+                if (soldier != null)
+                {
+                    selected = soldier.gameObject;
+                    Color selectColor = soldier.gameObject.GetComponent<SpriteRenderer>().color;
+                    selectColor.a = 0.70f;
+                    soldier.gameObject.GetComponent<SpriteRenderer>().color = selectColor;
+
+
+                }
+            
             else
             {
-                move = null;
+                selected = null;
             }
         }
-        else if (Input.GetMouseButtonDown(1)&&move!=null)
+        else if (Input.GetMouseButtonDown(1)&&selected!=null)
         {
             Vector3 mousePosition = cam.ScreenToWorldPoint(Input.mousePosition + Vector3.forward * 10);
-            mousePosition = new Vector3(Mathf.Ceil(mousePosition.x), Mathf.Ceil(mousePosition.y), Mathf.Ceil(mousePosition.z));
+            Vector3 movePosition = mousePosition;
 
-            //Bina var mý yok mu kontrol et!!!
-            move.Move(mousePosition);       
+            SoldierBehaviours.UnitBehaviour nextState = SoldierBehaviours.UnitBehaviour.Idle;
+
+            Collider2D enemy = Physics2D.OverlapCircle(mousePosition, 0.5f, LayerMask.GetMask("Build","Soldier"));
+            
+            if (enemy!=null && selected.TryGetComponent(out IAttack attack))
+            {
+                Bounds buildingBounds=enemy.bounds;
+                attack.SetEnemy(enemy.GetComponent<Damageable>());
+                nextState = SoldierBehaviours.UnitBehaviour.Attack;
+                buildingBounds.extents += Vector3.one*0.5f;
+                movePosition = buildingBounds.ClosestPoint(selected.transform.position);
+                
+            }
+           
+
+            movePosition = new Vector3(Mathf.Ceil(movePosition.x), Mathf.Ceil(movePosition.y), Mathf.Ceil(movePosition.z));
+            selected.GetComponent<IMove>().Move(movePosition,nextState);       
+
+
+
 
         }
     }

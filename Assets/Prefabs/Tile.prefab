@@ -97,5 +97,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9cb63897faeb6b459980865ea42e6fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _baseColor: {r: 1, g: 1, b: 1, a: 1}
-  _darkColor: {r: 0.8018868, g: 0.7746529, b: 0.7746529, a: 1}
+  _baseColor: {r: 0.8396226, g: 0.81110716, b: 0.81110716, a: 1}
+  _darkColor: {r: 0.6226415, g: 0.5838733, b: 0.5838733, a: 1}
+  x: 0
+  y: 0
+  gCost: 0
+  hCost: 0
+  fCost: 0
+  isWalkable: 1
+  cameFromTile: {fileID: 0}
