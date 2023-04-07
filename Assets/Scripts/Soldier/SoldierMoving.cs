@@ -52,8 +52,9 @@ public class SoldierMoving : MonoBehaviour
 
             Collider2D enemy = Physics2D.OverlapCircle(mousePosition, 0.5f, LayerMask.GetMask("Build","Soldier"));
             
-            if (enemy!=null && selected.TryGetComponent(out IAttack attack))
+            if (enemy!=null && selected.TryGetComponent(out IAttack attack)&& selected.GetComponent<Collider2D>()!=enemy)
             {
+               
                 Bounds buildingBounds=enemy.bounds;
                 attack.SetEnemy(enemy.GetComponent<Damageable>());
                 nextState = SoldierBehaviours.UnitBehaviour.Attack;

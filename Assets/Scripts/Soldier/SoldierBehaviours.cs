@@ -39,18 +39,32 @@ public class SoldierBehaviours : Damageable, IMove, IAttack, ICounterAttack
     private IEnumerator AttackCoroutine()
     {
         WaitForSeconds attackCooldown = new WaitForSeconds(soldier.AttackCooldown);
-        while (enemy.currentHealth != 0)
-        {
 
-            Attack();
-            yield return attackCooldown;
-        }
+       
+;      
+            while (enemy.currentHealth != 0 && enemy != null)
+            {
+         
+                Attack();
+            
+                yield return attackCooldown;
+            }
+        
+
     }
 
     private void Attack()
     {
-        enemy.TakeDamage(soldier.Damage, this);
-
+      
+        if (IsInNeighbour(enemy.transform.position) && enemy.GetComponent<SoldierBehaviours>()!=null) 
+        {
+            enemy.TakeDamage(soldier.Damage, this);
+        }
+        else if (enemy.GetComponent<SoldierBehaviours>() == null)
+        {
+            enemy.TakeDamage(soldier.Damage, this);
+        }
+       
     }
 
     public void Move(Vector2 endPoint, UnitBehaviour next)

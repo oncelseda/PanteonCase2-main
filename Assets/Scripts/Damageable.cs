@@ -12,8 +12,6 @@ public class Damageable : MonoBehaviour
     public bool IsInNeighbour(Vector3 worldPosition)
 
     {
-
-
         Bounds neighbourBounds = GetComponent<Collider2D>().bounds;
         neighbourBounds.extents += Vector3.one;
 
@@ -25,8 +23,8 @@ public class Damageable : MonoBehaviour
     {
         currentHealth -= damage;
         healthbar.slider.value = currentHealth;
-       
-        if (currentHealth == 0)
+        
+        if (currentHealth <= 0)
         {
             OnDead();
         }
